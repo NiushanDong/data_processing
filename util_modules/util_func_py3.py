@@ -52,7 +52,6 @@ def del_list_items_with_keywords(src_list, keyword):
     for data in src_list:
         if data.find(keyword) == -1:
             ret.append(data)
-
     return ret
 
 
