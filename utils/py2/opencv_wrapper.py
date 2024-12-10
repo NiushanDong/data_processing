@@ -1,7 +1,16 @@
-from base_py_func import *
+from util import *
 import cv2
 import numpy as np
-import ipdb
+import skimage
+import random
+
+
+def img_noisy(img, mean=0, lower_var=0.0, upper_var=0.005):
+    var = random.uniform(lower_var, upper_var)
+    img = skimage.util.random_noise(img, mode='gaussian', mean=mean, var=var)
+    img = skimage.util.img_as_ubyte(img)
+
+    return img
 
 
 def croped_img(img, lower_x, upper_x, lower_y, upper_y):
@@ -31,9 +40,10 @@ def draw_polygon(img, points):
     cv2.polylines(img, [points], True, (0, 0, 255), 1)
     return img
 
-def write_img(img_path, img):
-    img_dir = os.path.dirname(img_path)
-    try_make_dir(img_dir)
+def write_img(img_path, img, create_folder=True):
+    if create_folder:
+        img_dir = os.path.dirname(img_path)
+        try_make_dir(img_dir)
     cv2.imwrite(img_path, img)
 
 def arrange_angular(src_points):
